@@ -4,7 +4,7 @@ A simple PHP wrapper for utilising the [devRant](https://devrant.io) api.
 
 ## Usage
 
-#### Initialising the class
+### Initialising the class
 ```php
 $devRant = new \pxgamer\devRant();
 ```
@@ -19,12 +19,11 @@ getUsersId($username) | string     | string (json)
 
 ## Examples
 
-#### _Getting array of rants_
+### _Getting array of rants_
 ```php
 $devRant = new \pxgamer\devRant();
 $devRant::getRants();
 ```
-Response:
 ```json
 {
     "success": true,
@@ -33,12 +32,11 @@ Response:
 }
 ```
 
-#### _Getting a single rant by it's id_
+### _Getting a single rant by it's id_
 ```php
 $devRant = new \pxgamer\devRant();
 $devRant::getRantById(int);
 ```
-Response:
 ```json
 {
     "rant": {
@@ -49,12 +47,11 @@ Response:
 }
 ```
 
-#### _Getting a user by their id_
+### _Getting a user by their id_
 ```php
 $devRant = new \pxgamer\devRant();
 $devRant::getUserById(int);
 ```
-Response:
 ```json
 {
     "success": true,
@@ -81,12 +78,11 @@ Response:
 }
 ```
 
-#### _Search rants_
+### _Search rants_
 ```php
 $devRant = new \pxgamer\devRant();
 $devRant::searchRants('string');
 ```
-Response:
 ```json
 {
     "success": true,
@@ -120,12 +116,11 @@ Response:
 }
 ```
 
-#### _Getting a user's id from their username_
+### _Getting a user's id from their username_
 ```php
 $devRant = new \pxgamer\devRant();
 $devRant::getUsersId('string');
 ```
-Response:
 ```json
 {
     "success": true,
