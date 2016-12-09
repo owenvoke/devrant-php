@@ -1,0 +1,32 @@
+{
+  "name": "pxgamer/devrant-php",
+  "type": "library",
+  "description": "A simple PHP wrapper for utilising the devRant api.",
+  "homepage": "https://github.com/PXgamer/devrant-php",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "PXgamer",
+      "email": "owzie123@gmail.com",
+      "role": "Developer"
+    }
+  ],
+  "support": {
+    "issues": "https://github.com/PXgamer/devrant-php/issues"
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/PXgamer/devrant-php"
+    }
+  ],
+  "require": {
+    "php": ">=5.5.0",
+    "ext-curl": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "pxgamer\\": "src/"
+    }
+  }
+}

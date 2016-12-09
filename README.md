@@ -4,8 +4,18 @@ A simple PHP wrapper for utilising the [devRant](https://devrant.io) api.
 
 ## Usage
 
-### Initialising the class
+__Include the class:__
+- Using Composer  
+`composer require pxgamer/devrant-php`  
 ```php
+<?php
+require 'vendor/autoload.php';
+$devRant = new \pxgamer\devRant();
+```
+- Including the file manually  
+```php
+<?php
+include 'src/devRant.php';
 $devRant = new \pxgamer\devRant();
 ```
 
