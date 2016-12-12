@@ -1,8 +1,7 @@
 <?php
-use PHPUnit\Framework\TestCase;
 use pxgamer\devRant;
 
-class MainTest extends TestCase
+class MainTest extends PHPUnit_Framework_TestCase
 {
 
 	public function testCanBeInitialised()
