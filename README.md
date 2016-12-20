@@ -154,3 +154,15 @@ $devRant::postSignIn('username', 'password');
     }
 }
 ```
+
+### _Posting a rant_
+```php
+$devRant = new \pxgamer\devRant();
+$devRant::postNewRant($rant_content, $user_id, $token_id, $token_key, $tags);
+```
+```json
+{
+    "success": true,
+    "rant_id": 31131
+}
+```
