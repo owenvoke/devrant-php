@@ -26,6 +26,8 @@ getRantById($id)      | int        | string (json)
 getUserById($id)      | int        | string (json)
 searchRants($query)   | string     | string (json)
 getUsersId($username) | string     | string (json)
+postSignIn($username, $password) | strings     | string (json)
+postNewRant($rant_content, $user_id, $token_id, $token_key, $tags) | strings     | string (json)
 
 ## Examples
 
