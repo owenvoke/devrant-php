@@ -16,8 +16,8 @@ namespace pxgamer {
             'getUserById' => '/users/',
             'searchRants' => '/devrant/search',
             'getUsersId' => '/get-user-id',
-			'getSignIn' => '/users/auth-token',
-			'postNewRant' => '/devrant/rants'
+            'getSignIn' => '/users/auth-token',
+            'postNewRant' => '/devrant/rants'
         ];
 
         public static $app_id = 3; // No idea what this should be, but it only worked with 3
@@ -125,13 +125,13 @@ namespace pxgamer {
          */
         private static function post($endpoint, $content)
         {
-			$post_array = [
-				'app' => self::$app_id,
-				'plat' => 3
-			];
-			
-			if (count($content) > 0) $post_array = array_merge($post_array, $content);
-			
+            $post_array = [
+                'app' => self::$app_id,
+                'plat' => 3
+            ];
+            
+            if (count($content) > 0) $post_array = array_merge($post_array, $content);
+            
             $url = self::$api_base . $endpoint;
             $ch = curl_init();
             curl_setopt_array(
@@ -141,8 +141,8 @@ namespace pxgamer {
                     CURLOPT_SSL_VERIFYPEER => 0,
                     CURLOPT_SSL_VERIFYHOST => 0,
                     CURLOPT_RETURNTRANSFER => 1,
-					CURLOPT_POST => 1,
-					CURLOPT_POSTFIELDS => http_build_query($post_array)
+                    CURLOPT_POST => 1,
+                    CURLOPT_POSTFIELDS => http_build_query($post_array)
                 ]
             );
             $result = curl_exec($ch);
