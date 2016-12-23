@@ -10,7 +10,7 @@ before_install:
   - composer self-update
 
 install:
-  - composer install --ignore-platform-reqs
+  - composer install --no-dev --ignore-platform-reqs
 
 script: phpunit
 
