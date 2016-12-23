@@ -161,8 +161,7 @@ class Connection
             'plat' => 3,
         ];
 
-        if (count($content) > 0)
-        {
+        if (count($content) > 0) {
             $post_array = array_merge($post_array, $content);
         }
 
