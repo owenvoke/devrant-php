@@ -42,10 +42,10 @@ class MainTest extends PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('success', $data);
     }
 
-    public function testCanGetUsersId()
+    public function testCanGetUserId()
     {
         $devRant = new Connection;
-        $userIdData = $devRant->getUsersId('pxgamer');
+        $userIdData = $devRant->getUserId('pxgamer');
         $data = json_decode($userIdData, true);
         $this->assertArrayHasKey('success', $data);
     }
