@@ -4,12 +4,13 @@ php:
   - '5.6'
   - '7.0'
   - '7.1'
+  - nightly
 
 before_install:
   - composer self-update
 
 install:
-  - composer install
+  - composer install --ignore-platform-reqs
 
 script: phpunit
 
