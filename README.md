@@ -10,31 +10,41 @@ __Include the class:__
 ```php
 <?php
 require 'vendor/autoload.php';
-$devRant = new \pxgamer\devRant();
 ```
 - Including the file manually  
 ```php
 <?php
 include 'src/devRant.php';
-$devRant = new \pxgamer\devRant();
 ```
 
-Functions             | Parameters | Returns
+Once included, you can initialise the class using either of the following:
+```php
+$devRant = new \pxgamer\devRant();
+```
+```php
+use \pxgamer\devRant;
+$devRant = new devRant();
+```
+
+## Function Calls
+
+Function Name         | Parameters | Returns
 --------------------- | ---------- | -------
-getRants()            | void       | string (json)
-getRantById($id)      | int        | string (json)
-getUserById($id)      | int        | string (json)
-searchRants($query)   | string     | string (json)
-getUsersId($username) | string     | string (json)
-postSignIn($username, $password) | strings     | string (json)
-postNewRant($rant_content, $user_id, $token_id, $token_key, $tags) | strings     | string (json)
+__construct()         | boolean    | `class object`
+getRants()            | void       | `string (json)` or `object`
+getRantById($id)      | int        | `string (json)` or `object`
+getUserById($id)      | int        | `string (json)` or `object`
+searchRants($query)   | string     | `string (json)` or `object`
+getUsersId($username) | string     | `string (json)` or `object`
+postSignIn($username, $password) | strings     | `string (json)` or `object`
+postNewRant($rant_content, $user_id, $token_id, $token_key, $tags) | strings | `string (json)` or `object`
 
 ## Examples
 
 ### _Getting array of rants_
 ```php
 $devRant = new \pxgamer\devRant();
-$devRant::getRants();
+$devRant->getRants();
 ```
 ```json
 {
@@ -47,7 +57,7 @@ $devRant::getRants();
 ### _Getting a single rant by it's id_
 ```php
 $devRant = new \pxgamer\devRant();
-$devRant::getRantById(int);
+$devRant->getRantById(int);
 ```
 ```json
 {
@@ -62,7 +72,7 @@ $devRant::getRantById(int);
 ### _Getting a user by their id_
 ```php
 $devRant = new \pxgamer\devRant();
-$devRant::getUserById(int);
+$devRant->getUserById(int);
 ```
 ```json
 {
@@ -93,7 +103,7 @@ $devRant::getUserById(int);
 ### _Search rants_
 ```php
 $devRant = new \pxgamer\devRant();
-$devRant::searchRants('string');
+$devRant->searchRants('string');
 ```
 ```json
 {
@@ -131,7 +141,7 @@ $devRant::searchRants('string');
 ### _Getting a user's id from their username_
 ```php
 $devRant = new \pxgamer\devRant();
-$devRant::getUsersId('string');
+$devRant->getUsersId('string');
 ```
 ```json
 {
@@ -143,7 +153,7 @@ $devRant::getUsersId('string');
 ### _Getting signed in_
 ```php
 $devRant = new \pxgamer\devRant();
-$devRant::postSignIn('username', 'password');
+$devRant->postSignIn('username', 'password');
 ```
 ```json
 {
@@ -160,7 +170,7 @@ $devRant::postSignIn('username', 'password');
 ### _Posting a rant_
 ```php
 $devRant = new \pxgamer\devRant();
-$devRant::postNewRant($rant_content, $user_id, $token_id, $token_key, $tags);
+$devRant->postNewRant($rant_content, $user_id, $token_id, $token_key, $tags);
 ```
 ```json
 {

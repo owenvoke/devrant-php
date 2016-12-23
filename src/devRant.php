@@ -1,6 +1,7 @@
 <?php
 
-namespace pxgamer {
+namespace pxgamer
+{
 
     /**
      * Class devRant
@@ -20,19 +21,23 @@ namespace pxgamer {
             'postNewRant' => '/devrant/rants'
         ];
 
+        public static $return_object = false;
+
         public static $app_id = 3; // No idea what this should be, but it only worked with 3
 
         /**
          * devRant constructor.
+         * @param bool $return_object
          */
-        public function __construct()
+        public function __construct($return_object = false)
         {
+            self::$return_object = $return_object;
         }
 
         /**
          * @return string
          */
-        public static function getRants()
+        public function getRants()
         {
             return self::get(self::$endpoints['getRants']);
         }
@@ -41,7 +46,7 @@ namespace pxgamer {
          * @param $id
          * @return bool|string
          */
-        public static function getRantById($id)
+        public function getRantById($id)
         {
             return (isset($id) && is_numeric($id)) ? self::get(self::$endpoints['getRantById'] . $id) : false;
         }
@@ -50,7 +55,7 @@ namespace pxgamer {
          * @param $id
          * @return bool|string
          */
-        public static function getUserById($id)
+        public function getUserById($id)
         {
             return (isset($id) && is_numeric($id)) ? self::get(self::$endpoints['getUserById'] . $id) : false;
         }
@@ -59,7 +64,7 @@ namespace pxgamer {
          * @param $query
          * @return string
          */
-        public static function searchRants($query)
+        public function searchRants($query)
         {
             return self::get(self::$endpoints['searchRants'] . '?term=' . urlencode($query));
         }
@@ -68,7 +73,7 @@ namespace pxgamer {
          * @param $username
          * @return bool|string
          */
-        public static function getUsersId($username)
+        public function getUsersId($username)
         {
             return (isset($username) && $username !== '') ? self::get(self::$endpoints['getUsersId'] . '?username=' . urlencode($username)) : false;
         }
@@ -78,7 +83,7 @@ namespace pxgamer {
          * @param $password
          * @return bool|string
          */
-        public static function postSignIn($username, $password)
+        public function postSignIn($username, $password)
         {
             return (isset($username) && $username !== '') ? self::post(self::$endpoints['getSignIn'], ['username' => $username, 'password' => $password]) : false;
         }
@@ -91,7 +96,7 @@ namespace pxgamer {
          * @param $tags
          * @return bool|string
          */
-        public static function postNewRant($rant_content, $user_id, $token_id, $token_key, $tags = '')
+        public function postNewRant($rant_content, $user_id, $token_id, $token_key, $tags = '')
         {
             return (isset($rant_content) && $rant_content !== '') ? self::post(self::$endpoints['postNewRant'], ['rant' => $rant_content, 'user_id' => $user_id, 'token_id' => $token_id, 'token_key' => $token_key, 'tags' => $tags]) : false;
         }
@@ -116,6 +121,11 @@ namespace pxgamer {
             $result = curl_exec($ch);
             curl_close($ch);
 
+            if (self::$return_object)
+            {
+                $result = json_decode($result);
+            }
+
             return $result;
         }
 
@@ -129,9 +139,9 @@ namespace pxgamer {
                 'app' => self::$app_id,
                 'plat' => 3
             ];
-            
+
             if (count($content) > 0) $post_array = array_merge($post_array, $content);
-            
+
             $url = self::$api_base . $endpoint;
             $ch = curl_init();
             curl_setopt_array(
@@ -147,6 +157,11 @@ namespace pxgamer {
             );
             $result = curl_exec($ch);
             curl_close($ch);
+
+            if (self::$return_object)
+            {
+                $result = json_decode($result);
+            }
 
             return $result;
         }
