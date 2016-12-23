@@ -1,6 +1,4 @@
 language: php
-before_script:
-  - composer install --no-interaction --no-dev
 php:
   - '5.5'
   - '5.6'
@@ -8,4 +6,18 @@ php:
   - '7.1'
   - hhvm
   - nightly
+
+before_install:
+  - composer self-update
+
+install:
+  - composer install --ignore-platform-reqs --no-dev
+
 script: phpunit
+
+cache:
+  directories:
+    vendor
+
+before_cache:
+  - composer update
