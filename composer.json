@@ -1,7 +1,8 @@
 {
   "name": "pxgamer/devrant-php",
   "type": "library",
-  "description": "A simple PHP wrapper for utilising the devRant api.",
+  "description": "A simple PHP wrapper for utilising the devRant API.",
+  "keywords": ["php", "devRant", "api", "wrapper"],
   "homepage": "https://github.com/PXgamer/devrant-php",
   "license": "MIT",
   "authors": [
@@ -24,9 +25,14 @@
     "php": ">=5.5.0",
     "ext-curl": "*"
   },
+  "require-dev": {
+    "friendsofphp/php-cs-fixer": "^2.0",
+    "phpunit/phpunit": ">=4.5.0"
+  },
   "autoload": {
     "psr-4": {
-      "pxgamer\\": "src/"
+      "pxgamer\\devRant\\": "src/",
+      "": "vendor/"
     }
   }
 }

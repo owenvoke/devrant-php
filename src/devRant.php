@@ -1,50 +1,32 @@
 <?php
 
-namespace pxgamer;
+namespace pxgamer\devRant;
 
 /**
  * Class devRant
  * @package pxgamer
  */
-class devRant
+class Connection
 {
-    private static $api_base = 'https://www.devrant.io/api';
-
-    private static $endpoints = [
-        'getRants' => '/devrant/rants',
-        'getRantById' => '/devrant/rants/',
-        'getUserById' => '/users/',
-        'searchRants' => '/devrant/search?term=',
-        'getUsersId' => '/get-user-id?username=',
-        'postSignIn' => '/users/auth-token',
-        'postNewRant' => '/devrant/rants',
-    ];
+    const API_BASE = 'https://www.devrant.io/api';
 
     /**
      * No idea what this should be, but it only worked with 3
      */
-    private static $app_id = 3;
+    const APP_ID = 3;
 
-    /**
-     * @var bool $return_object Stores whether the instance should return object
-     *                          or JSON.
-     */
-    private $return_object;
+    private $authUserId = 0;
 
-    /**
-     * @param bool $return_object
-     */
-    public function __construct($return_object = false)
-    {
-        $this->return_object = $return_object;
-    }
+    private $tokenId = 0;
+
+    private $tokenKey = '';
 
     /**
      * @return string
      */
     public function getRants()
     {
-        return $this->get(self::$endpoints['getRants']);
+        return $this->get('/devrant/rants');
     }
 
     /**
@@ -53,9 +35,7 @@ class devRant
      */
     public function getRantById($id)
     {
-        return (is_numeric($id))
-            ? $this->get(self::$endpoints['getRantById'] . $id)
-            : false;
+        return (is_numeric($id)) ? $this->get('/devrant/rants/' . $id) : false;
     }
 
     /**
@@ -64,9 +44,7 @@ class devRant
      */
     public function getUserById($id)
     {
-        return (is_numeric($id))
-            ? $this->get(self::$endpoints['getUserById'] . $id)
-            : false;
+        return (is_numeric($id)) ? $this->get('/users/' . $id) : false;
     }
 
     /**
@@ -75,17 +53,17 @@ class devRant
      */
     public function searchRants($query)
     {
-        return $this->get(self::$endpoints['searchRants'] . urlencode($query));
+        return $this->get('/devrant/search?term=' . urlencode($query));
     }
 
     /**
      * @param $username
      * @return bool|string
      */
-    public function getUsersId($username)
+    public function getUserId($username)
     {
         return (is_string($username) && $username !== '')
-            ? $this->get(self::$endpoints['getUsersId'] . urlencode($username))
+            ? $this->get('/get-user-id?username=' . urlencode($username))
             : false;
     }
 
@@ -94,13 +72,32 @@ class devRant
      * @param $password
      * @return bool|string
      */
-    public function postSignIn($username, $password)
+    public function login($username, $password)
     {
-        return (is_string($username) && $username !== '')
-            ? $this->post(self::$endpoints['postSignIn'],
-                         ['username' => $username, 'password' => $password]
-            )
-            : false;
+        if (!is_string($username) || $username === '') {
+            return false;
+        }
+
+        $result = $this->post(
+            '/users/auth-token',
+            ['username' => $username, 'password' => $password]
+        );
+
+        if ($result->success === true) {
+            $this->authUserId = $result->auth_token->user_id;
+            $this->tokenId = $result->auth_token->id;
+            $this->tokenKey = $result->auth_token->key;
+            return true;
+        }
+
+        return false;
+    }
+
+    public function logout()
+    {
+        $this->authUserId = 0;
+        $this->tokenId = 0;
+        $this->tokenKey = '';
     }
 
     /**
@@ -111,17 +108,21 @@ class devRant
      * @param $tags
      * @return bool|string
      */
-    public function postNewRant($rant_content, $user_id, $token_id, $token_key, $tags = '')
+    public function postNewRant($rant_content, $tags = '')
     {
-        return (is_string($rant_content) && $rant_content !== '')
-            ? $this->post(self::$endpoints['postNewRant'], [
-                'rant' => $rant_content,
-                'user_id' => $user_id,
-                'token_id' => $token_id,
-                'token_key' => $token_key,
-                'tags' => $tags,
-            ])
-            : false;
+        if ($this->tokenId === 0 || !is_string($rant_content)
+            || $rant_content === ''
+        ) {
+            return false;
+        }
+
+        return $this->post('/devrant/rants', [
+            'rant' => $rant_content,
+            'user_id' => $this->authUserId,
+            'token_id' => $this->tokenId,
+            'token_key' => $this->tokenKey,
+            'tags' => $tags,
+        ]);
     }
 
     /**
@@ -131,8 +132,8 @@ class devRant
     private function get($endpoint)
     {
         $url = (strpos($endpoint, '?') == 0)
-            ? self::$api_base . $endpoint . '?app=' . self::$app_id
-            : self::$api_base . $endpoint . '&app=' . self::$app_id;
+            ? self::API_BASE . $endpoint . '?app=' . self::APP_ID
+            : self::API_BASE . $endpoint . '&app=' . self::APP_ID;
         $ch = curl_init();
         curl_setopt_array(
             $ch,
@@ -146,11 +147,6 @@ class devRant
         $result = curl_exec($ch);
         curl_close($ch);
 
-        if ($this->return_object)
-        {
-            $result = json_decode($result);
-        }
-
         return $result;
     }
 
@@ -161,7 +157,7 @@ class devRant
     private function post($endpoint, $content)
     {
         $post_array = [
-            'app' => self::$app_id,
+            'app' => self::APP_ID,
             'plat' => 3,
         ];
 
@@ -170,7 +166,7 @@ class devRant
             $post_array = array_merge($post_array, $content);
         }
 
-        $url = self::$api_base . $endpoint;
+        $url = self::API_BASE . $endpoint;
         $ch = curl_init();
         curl_setopt_array(
             $ch,
@@ -185,11 +181,6 @@ class devRant
         );
         $result = curl_exec($ch);
         curl_close($ch);
-
-        if ($this->return_object)
-        {
-            $result = json_decode($result);
-        }
 
         return $result;
     }
