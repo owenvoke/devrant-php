@@ -5,47 +5,50 @@ A simple PHP wrapper for utilising the [devRant](https://devrant.io) api.
 ## Usage
 
 __Include the class:__
-- Using Composer  
-`composer require pxgamer/devrant-php`  
+- Using Composer
+
+`composer require pxgamer/devrant-php`
 ```php
 <?php
 require 'vendor/autoload.php';
 ```
-- Including the file manually  
+
+- Including the file manually
 ```php
 <?php
-include 'src/devRant.php';
+include 'src/Connection.php';
 ```
 
 Once included, you can initialise the class using either of the following:
 ```php
-$devRant = new \pxgamer\devRant();
+$devRant = new \pxgamer\devRant\Connection;
 ```
 ```php
-use \pxgamer\devRant;
-$devRant = new devRant();
+use \pxgamer\devRant\Connection;
+$devRant = new Connection;
 ```
 
-## Function Calls
+## Class Methods
 
-Function Name         | Parameters | Returns
+Method Name           | Parameters | Returns
 --------------------- | ---------- | -------
-__construct()         | boolean    | `class object`
-getRants()            | void       | `string (json)` or `object`
-getRantById($id)      | int        | `string (json)` or `object`
-getUserById($id)      | int        | `string (json)` or `object`
-searchRants($query)   | string     | `string (json)` or `object`
-getUsersId($username) | string     | `string (json)` or `object`
-postSignIn($username, $password) | strings     | `string (json)` or `object`
-postNewRant($rant_content, $user_id, $token_id, $token_key, $tags) | strings | `string (json)` or `object`
+getRants()            | void       | `string (json)`
+getRantById($id)      | int        | `string (json)`
+getUserById($id)      | int        | `string (json)`
+searchRants($query)   | string     | `string (json)`
+getUsersId($username) | string     | `string (json)`
+login($username, $password) | strings     | `boolean`
+logout()              | void       | `void`
+postNewRant($rant_content, $tags) | strings | `string (json)`
 
 ## Examples
 
 ### _Getting array of rants_
 ```php
-$devRant = new \pxgamer\devRant();
+$devRant = new \pxgamer\devRant\Connection;
 $devRant->getRants();
 ```
+Returns:
 ```json
 {
     "success": true,
@@ -54,11 +57,12 @@ $devRant->getRants();
 }
 ```
 
-### _Getting a single rant by it's id_
+### _Getting a single rant by its id_
 ```php
-$devRant = new \pxgamer\devRant();
+$devRant = new \pxgamer\devRant\Connection;
 $devRant->getRantById(int);
 ```
+Returns:
 ```json
 {
     "rant": {
@@ -71,9 +75,10 @@ $devRant->getRantById(int);
 
 ### _Getting a user by their id_
 ```php
-$devRant = new \pxgamer\devRant();
+$devRant = new \pxgamer\devRant\Connection;
 $devRant->getUserById(int);
 ```
+Returns:
 ```json
 {
     "success": true,
@@ -102,9 +107,10 @@ $devRant->getUserById(int);
 
 ### _Search rants_
 ```php
-$devRant = new \pxgamer\devRant();
+$devRant = new \pxgamer\devRant\Connection;
 $devRant->searchRants('string');
 ```
+Returns:
 ```json
 {
     "success": true,
@@ -140,9 +146,10 @@ $devRant->searchRants('string');
 
 ### _Getting a user's id from their username_
 ```php
-$devRant = new \pxgamer\devRant();
+$devRant = new \pxgamer\devRant\Connection;
 $devRant->getUsersId('string');
 ```
+Returns:
 ```json
 {
     "success": true,
@@ -152,26 +159,19 @@ $devRant->getUsersId('string');
 
 ### _Getting signed in_
 ```php
-$devRant = new \pxgamer\devRant();
-$devRant->postSignIn('username', 'password');
+$devRant = new \pxgamer\devRant\Connection;
+$devRant->login('username', 'password');
 ```
-```json
-{
-    "success": true,
-    "auth_token": {
-        "id": 18318,
-        "key": "Njykalfo2143xzJt2Jux$DHsapCErDF7W291nfatd",
-        "expire_time": 1484832373,
-        "user_id": 1
-    }
-}
-```
+Returns `true` if successful, `false` if not
 
 ### _Posting a rant_
 ```php
-$devRant = new \pxgamer\devRant();
-$devRant->postNewRant($rant_content, $user_id, $token_id, $token_key, $tags);
+$devRant = new \pxgamer\devRant\Connection;
+if ($devRant->login('username', 'password')) {
+    $devRant->postNewRant($rant_content, $tags);
+}
 ```
+Returns:
 ```json
 {
     "success": true,
