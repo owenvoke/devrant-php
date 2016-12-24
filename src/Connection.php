@@ -124,14 +124,14 @@ class Connection
      */
     public function rant(Rant $rant)
     {
-        if ($this->tokenId === 0 || !is_string($rant_content)
-            || $rant->content === ''
+        if ($this->tokenId === 0 || !is_string($rant->text)
+            || $rant->text === ''
         ) {
             return false;
         }
 
         return $this->post('/devrant/rants', [
-            'rant' => $rant->content,
+            'rant' => $rant->text,
             'user_id' => $this->authUserId,
             'token_id' => $this->tokenId,
             'token_key' => $this->tokenKey,
