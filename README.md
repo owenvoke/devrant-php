@@ -1,5 +1,7 @@
 # devrant-php
 
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/PXgamer/devrant-php/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/PXgamer/devrant-php/?branch=master)
+
 A simple PHP wrapper for utilising the [devRant](https://devrant.io) api.
 
 ## Usage
