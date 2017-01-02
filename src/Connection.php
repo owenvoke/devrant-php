@@ -24,9 +24,24 @@ class Connection
     /**
      * @return string
      */
-    public function getRants()
+    public function getRants($term = '')
     {
-        return $this->get('/devrant/rants');
+        $get = (empty($term))
+            ? '/devrant/rants'
+            : '/devrant/search?term=' . urlencode($term);
+
+        $data = $this->get($get);
+        if (!isset($data['success'])) {
+            return false;
+        }
+
+        $converter = function ($rant) {
+            return (new Rant())->populateFrom($rant);
+        };
+
+        return array_map($converter,
+            (empty($term)) ? $data['rants'] : $data['results']
+        );
     }
 
     /**
@@ -35,7 +50,15 @@ class Connection
      */
     public function getRantById($id)
     {
-        return (is_numeric($id)) ? $this->get('/devrant/rants/' . $id) : false;
+        if (!is_numeric($id)) {
+            return false;
+        }
+
+        $data = $this->get('/devrant/rants/' . $id);
+
+        return (isset($data['success']))
+            ? (new Rant())->populateFrom($data)
+            : false;
     }
 
     /**
@@ -45,15 +68,6 @@ class Connection
     public function getUserById($id)
     {
         return (is_numeric($id)) ? $this->get('/users/' . $id) : false;
-    }
-
-    /**
-     * @param $query
-     * @return string
-     */
-    public function searchRants($query)
-    {
-        return $this->get('/devrant/search?term=' . urlencode($query));
     }
 
     /**
@@ -108,20 +122,20 @@ class Connection
      * @param $tags
      * @return bool|string
      */
-    public function postNewRant($rant_content, $tags = '')
+    public function rant(Rant $rant)
     {
-        if ($this->tokenId === 0 || !is_string($rant_content)
-            || $rant_content === ''
+        if ($this->tokenId === 0 || !is_string($rant->text)
+            || $rant->text === ''
         ) {
             return false;
         }
 
         return $this->post('/devrant/rants', [
-            'rant' => $rant_content,
+            'rant' => $rant->text,
             'user_id' => $this->authUserId,
             'token_id' => $this->tokenId,
             'token_key' => $this->tokenKey,
-            'tags' => $tags,
+            'tags' => $rant->tags,
         ]);
     }
 
@@ -147,7 +161,7 @@ class Connection
         $result = curl_exec($ch);
         curl_close($ch);
 
-        return $result;
+        return json_decode($result, true);
     }
 
     /**
@@ -181,6 +195,6 @@ class Connection
         $result = curl_exec($ch);
         curl_close($ch);
 
-        return $result;
+        return json_decode($result, true);
     }
 }
