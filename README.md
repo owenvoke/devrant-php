@@ -42,6 +42,7 @@ getUsersId($username) | string     | `array`
 login($username, $password) | strings     | `boolean`
 logout()              | void       | `void`
 rant($rant) | Rant object | `array`
+notifs() | void | `array`
 
 ## Examples
 
@@ -170,5 +171,30 @@ Returns:
 [
     "success" => true,
     "rant_id" => 31131
+]
+```
+
+### _Getting your notifications_
+```php
+use \pxgamer\devRant\Rant;
+
+$devRant = new \pxgamer\devRant\Connection;
+if ($devRant->login('username', 'password')) {
+    $notifications = $devRant->notifs();
+}
+```
+Returns:
+```php
+[
+    "success" => true,
+    "data" => {
+		"items" => [
+			...
+		],
+		"check_time" => 11111,
+		"username_map" => {
+			...
+		}
+	}
 ]
 ```

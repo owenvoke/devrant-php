@@ -97,10 +97,10 @@ class Connection
             ['username' => $username, 'password' => $password]
         );
 
-        if ($result->success === true) {
-            $this->authUserId = $result->auth_token->user_id;
-            $this->tokenId = $result->auth_token->id;
-            $this->tokenKey = $result->auth_token->key;
+        if ($result['success'] === true) {
+            $this->authUserId = $result['auth_token']['user_id'];
+            $this->tokenId = $result['auth_token']['id'];
+            $this->tokenKey = $result['auth_token']['key'];
             return true;
         }
 
@@ -140,6 +140,21 @@ class Connection
     }
 
     /**
+     * @param $user_id
+     * @param $token_id
+     * @param $token_key
+     * @return bool|string
+     */
+    public function notifs()
+    {
+        if ($this->tokenId === 0) {
+            return false;
+        }
+
+        return $this->get('/users/me/notif-feed?user_id=' . $this->authUserId . '&token_id=' . $this->tokenId . '&token_key=' . $this->tokenKey);
+    }
+
+    /**
      * @param $endpoint
      * @return mixed
      */
@@ -148,6 +163,7 @@ class Connection
         $url = (strpos($endpoint, '?') == 0)
             ? self::API_BASE . $endpoint . '?app=' . self::APP_ID
             : self::API_BASE . $endpoint . '&app=' . self::APP_ID;
+            
         $ch = curl_init();
         curl_setopt_array(
             $ch,
