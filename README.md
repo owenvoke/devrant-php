@@ -176,8 +176,6 @@ Returns:
 
 ### _Getting your notifications_
 ```php
-use \pxgamer\devRant\Rant;
-
 $devRant = new \pxgamer\devRant\Connection;
 if ($devRant->login('username', 'password')) {
     $notifications = $devRant->notifs();
@@ -197,4 +195,15 @@ Returns:
 		}
 	}
 ]
+```
+
+### _Deleting your account_
+
+*Please note that this will __permanently__ delete your account from devRant.*
+
+```php
+$devRant = new \pxgamer\devRant\Connection;
+if ($devRant->login('username', 'password')) {
+    $devRant->deleteAccount();
+}
 ```

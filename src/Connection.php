@@ -155,6 +155,21 @@ class Connection
     }
 
     /**
+     * @param $user_id
+     * @param $token_id
+     * @param $token_key
+     * @return bool|string
+     */
+    public function deleteAccount()
+    {
+        if ($this->tokenId === 0) {
+            return false;
+        }
+
+        return $this->delete('/users/me?user_id=' . $this->authUserId . '&token_id=' . $this->tokenId . '&token_key=' . $this->tokenKey);
+    }
+
+    /**
      * @param $endpoint
      * @return mixed
      */
@@ -206,6 +221,33 @@ class Connection
                 CURLOPT_RETURNTRANSFER => 1,
                 CURLOPT_POST => 1,
                 CURLOPT_POSTFIELDS => http_build_query($post_array),
+            ]
+        );
+        $result = curl_exec($ch);
+        curl_close($ch);
+
+        return json_decode($result, true);
+    }
+
+    /**
+     * @param $endpoint
+     * @return mixed
+     */
+    private function delete($endpoint)
+    {
+        $url = (strpos($endpoint, '?') == 0)
+            ? self::API_BASE . $endpoint . '?app=' . self::APP_ID
+            : self::API_BASE . $endpoint . '&app=' . self::APP_ID;
+            
+        $ch = curl_init();
+        curl_setopt_array(
+            $ch,
+            [
+                CURLOPT_URL => $url,
+                CURLOPT_SSL_VERIFYPEER => 0,
+                CURLOPT_SSL_VERIFYHOST => 0,
+                CURLOPT_RETURNTRANSFER => 1,
+                CURLOPT_CUSTOMREQUEST => 'DELETE',
             ]
         );
         $result = curl_exec($ch);
