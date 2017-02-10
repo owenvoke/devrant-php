@@ -207,3 +207,9 @@ if ($devRant->login('username', 'password')) {
     $devRant->deleteAccount();
 }
 ```
+Returns:
+```php
+[
+    "success" => 1
+]
+```
