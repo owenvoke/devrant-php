@@ -197,6 +197,24 @@ Returns:
 ]
 ```
 
+### _Deleting a rant_
+
+*Please note that this will __permanently__ delete the rant from devRant.*
+
+```php
+$devRant = new \pxgamer\devRant\Connection;
+if ($devRant->login('username', 'password')) {
+    $devRant->deleteRant($rantId);
+}
+```
+Returns:
+```php
+[
+    "success" => true
+]
+```
+
+
 ### _Deleting your account_
 
 *Please note that this will __permanently__ delete your account from devRant.*
@@ -210,6 +228,6 @@ if ($devRant->login('username', 'password')) {
 Returns:
 ```php
 [
-    "success" => 1
+    "success" => true
 ]
 ```
