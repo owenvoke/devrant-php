@@ -174,6 +174,21 @@ Returns:
 ]
 ```
 
+### _Posting a comment_
+```php
+$devRant = new \pxgamer\devRant\Connection;
+if ($devRant->login('username', 'password')) {
+    $devRant->comment($rantId, 'Comment Content');
+}
+```
+Returns:
+```php
+[
+    "success" => true
+]
+```
+
+
 ### _Getting your notifications_
 ```php
 $devRant = new \pxgamer\devRant\Connection;

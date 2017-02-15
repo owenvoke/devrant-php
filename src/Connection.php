@@ -140,6 +140,30 @@ class Connection
     }
 
     /**
+     * @param $rant_id
+     * @param $comment
+     * @param $user_id
+     * @param $token_id
+     * @param $token_key
+     * @return bool|string
+     */
+    public function comment($rantId, $comment)
+    {
+        if ($this->tokenId === 0 || !is_string($comment)
+            || $comment === ''
+        ) {
+            return false;
+        }
+
+        return $this->post('/devrant/rants/' . $rantId . '/comments', [
+            'comment' => $comment,
+            'user_id' => $this->authUserId,
+            'token_id' => $this->tokenId,
+            'token_key' => $this->tokenKey,
+        ]);
+    }
+
+    /**
      * @param $user_id
      * @param $token_id
      * @param $token_key
