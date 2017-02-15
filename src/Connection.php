@@ -195,6 +195,22 @@ class Connection
     }
 
     /**
+     * @param $id
+     * @param $user_id
+     * @param $token_id
+     * @param $token_key
+     * @return bool|string
+     */
+    public function deleteComment($id)
+    {
+        if ($this->tokenId === 0 || !is_numeric($id)) {
+            return false;
+        }
+
+        return $this->delete('/comments/' . $id . '?user_id=' . $this->authUserId . '&token_id=' . $this->tokenId . '&token_key=' . $this->tokenKey);
+    }
+
+    /**
      * @param $user_id
      * @param $token_id
      * @param $token_key

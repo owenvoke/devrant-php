@@ -42,7 +42,11 @@ getUsersId($username) | string     | `array`
 login($username, $password) | strings     | `boolean`
 logout()              | void       | `void`
 rant($rant) | Rant object | `array`
+comment($rantId, $comment) | mixed | `array`
 notifs() | void | `array`
+deleteRant($rantId) | int | `array`
+deleteComment($commentId) | int | `array`
+deleteAccount() | void | `array`
 
 ## Examples
 
@@ -229,6 +233,22 @@ Returns:
 ]
 ```
 
+### _Deleting a comment_
+
+*Please note that this will __permanently__ delete the comment from devRant.*
+
+```php
+$devRant = new \pxgamer\devRant\Connection;
+if ($devRant->login('username', 'password')) {
+    $devRant->deleteComment($commentId);
+}
+```
+Returns:
+```php
+[
+    "success" => true
+]
+```
 
 ### _Deleting your account_
 
