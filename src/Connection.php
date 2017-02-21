@@ -3,8 +3,8 @@
 namespace pxgamer\devRant;
 
 /**
- * Class devRant
- * @package pxgamer
+ * Class Connection
+ * @package pxgamer\devRant
  */
 class Connection
 {
@@ -115,11 +115,7 @@ class Connection
     }
 
     /**
-     * @param $rant_content
-     * @param $user_id
-     * @param $token_id
-     * @param $token_key
-     * @param $tags
+     * @param Rant $rant
      * @return bool|string
      */
     public function rant(Rant $rant)
@@ -140,11 +136,8 @@ class Connection
     }
 
     /**
-     * @param $rant_id
+     * @param $rantId
      * @param $comment
-     * @param $user_id
-     * @param $token_id
-     * @param $token_key
      * @return bool|string
      */
     public function comment($rantId, $comment)
@@ -164,9 +157,6 @@ class Connection
     }
 
     /**
-     * @param $user_id
-     * @param $token_id
-     * @param $token_key
      * @return bool|string
      */
     public function notifs()
@@ -188,9 +178,6 @@ class Connection
 
     /**
      * @param $id
-     * @param $user_id
-     * @param $token_id
-     * @param $token_key
      * @return bool|string
      */
     public function deleteRant($id)
@@ -204,9 +191,6 @@ class Connection
 
     /**
      * @param $id
-     * @param $user_id
-     * @param $token_id
-     * @param $token_key
      * @return bool|string
      */
     public function deleteComment($id)
@@ -219,9 +203,6 @@ class Connection
     }
 
     /**
-     * @param $user_id
-     * @param $token_id
-     * @param $token_key
      * @return bool|string
      */
     public function deleteAccount()

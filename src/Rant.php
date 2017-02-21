@@ -2,6 +2,10 @@
 
 namespace pxgamer\devRant;
 
+/**
+ * Class Rant
+ * @package pxgamer\devRant
+ */
 class Rant
 {
     private $id;
