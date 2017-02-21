@@ -5,6 +5,10 @@ namespace pxgamer\devRant;
 /**
  * Class Connection
  * @package pxgamer\devRant
+ *
+ * @property int $authUserId
+ * @property int $tokenId
+ * @property string $tokenKey
  */
 class Connection
 {
