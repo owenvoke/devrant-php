@@ -44,6 +44,7 @@ logout()              | void       | `void`
 rant($rant) | Rant object | `array`
 comment($rantId, $comment) | mixed | `array`
 notifs() | void | `array`
+collabs() | void | `array`
 deleteRant($rantId) | int | `array`
 deleteComment($commentId) | int | `array`
 deleteAccount() | void | `array`
@@ -192,6 +193,23 @@ Returns:
 ]
 ```
 
+### _Getting Collabs_
+```php
+$devRant = new \pxgamer\devRant\Connection;
+
+$collabs = $devRant->collabs();
+```
+Returns:
+```php
+[
+    "success" => true,
+    "rants" => [
+		[0] => [
+		    ...
+		]
+	]
+]
+```
 
 ### _Getting your notifications_
 ```php

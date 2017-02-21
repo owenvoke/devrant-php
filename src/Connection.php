@@ -179,6 +179,14 @@ class Connection
     }
 
     /**
+     * @return bool|string
+     */
+    public function collabs()
+    {
+        return $this->get('/devrant/collabs?user_id=' . $this->authUserId . '&token_id=' . $this->tokenId . '&token_key=' . $this->tokenKey);
+    }
+
+    /**
      * @param $id
      * @param $user_id
      * @param $token_id

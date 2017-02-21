@@ -45,4 +45,11 @@ class MainTest extends PHPUnit_Framework_TestCase
         $this->assertArrayHasKey('success', $userIdData);
     }
 
+    public function testCanGetCollabs()
+    {
+        $devRant = new Connection;
+        $collabs = $devRant->collabs();
+        $this->assertArrayHasKey('success', $collabs);
+    }
+
 }
