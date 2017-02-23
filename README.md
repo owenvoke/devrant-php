@@ -54,7 +54,8 @@ deleteAccount() | void | `array`
 ### _Getting array of rants_
 ```php
 $devRant = new \pxgamer\devRant\Connection;
-$devRant->getRants();
+$devRant->getRants(); // Get rants
+$devRant->getRants($searchterm); // Get rants using a search query
 ```
 Returns false on failure, or:
 ```php
