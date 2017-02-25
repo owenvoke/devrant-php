@@ -43,6 +43,7 @@ login($username, $password) | strings     | `boolean`
 logout()              | void       | `void`
 rant($rant) | Rant object | `array`
 comment($rantId, $comment) | mixed | `array`
+voteRant($rantId, $vote) | mixed | `array`
 notifs() | void | `array`
 collabs() | void | `array`
 deleteRant($rantId) | int | `array`
@@ -208,6 +209,24 @@ Returns:
 		[0] => [
 		    ...
 		]
+	]
+]
+```
+
+### _Voting on Rants_
+```php
+$devRant = new \pxgamer\devRant\Connection;
+if ($devRant->login('username', 'password')) {
+    $voteRant = $devRant->voteRant($rantId, $vote);
+}
+```
+Returns:
+```php
+[
+    "success" => true,
+    "rant" => [
+		[id] => ...,
+		...
 	]
 ]
 ```

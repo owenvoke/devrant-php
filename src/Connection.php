@@ -161,6 +161,25 @@ class Connection
     }
 
     /**
+     * @param int $rantId
+     * @param int $vote
+     * @return bool|string
+     */
+    public function voteRant($rantId, $vote = 1)
+    {
+        if ($this->tokenId === 0 || !is_numeric($vote)) {
+            return false;
+        }
+
+        return $this->post('/devrant/rants/' . $rantId . '/vote', [
+            'vote' => $vote,
+            'user_id' => $this->authUserId,
+            'token_id' => $this->tokenId,
+            'token_key' => $this->tokenKey,
+        ]);
+    }
+
+    /**
      * @return bool|string
      */
     public function notifs()
