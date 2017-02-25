@@ -236,7 +236,7 @@ Returns:
 ```php
 $devRant = new \pxgamer\devRant\Connection;
 if ($devRant->login('username', 'password')) {
-    $voteRant = $devRant->voteRant($rantId, $vote);
+    $voteRant = $devRant->voteComment($rantId, $vote);
 }
 ```
 Returns:
