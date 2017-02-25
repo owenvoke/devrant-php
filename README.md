@@ -44,7 +44,7 @@ logout()              | void       | `void`
 rant($rant) | Rant object | `array`
 comment($rantId, $comment) | mixed | `array`
 voteRant($rantId, $vote) | mixed | `array`
-voteRant($commentId, $vote) | mixed | `array`
+voteComment($commentId, $vote) | mixed | `array`
 notifs() | void | `array`
 collabs() | void | `array`
 deleteRant($rantId) | int | `array`
