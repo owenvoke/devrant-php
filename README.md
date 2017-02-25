@@ -231,6 +231,24 @@ Returns:
 ]
 ```
 
+### _Voting on Comments_
+```php
+$devRant = new \pxgamer\devRant\Connection;
+if ($devRant->login('username', 'password')) {
+    $voteRant = $devRant->voteRant($rantId, $vote);
+}
+```
+Returns:
+```php
+[
+    "success" => true,
+    "comment" => [
+		[id] => ...,
+		...
+	]
+]
+```
+
 ### _Getting your notifications_
 ```php
 $devRant = new \pxgamer\devRant\Connection;

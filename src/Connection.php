@@ -180,6 +180,25 @@ class Connection
     }
 
     /**
+     * @param int $commentId
+     * @param int $vote
+     * @return bool|string
+     */
+    public function voteComment($commentId, $vote = 1)
+    {
+        if ($this->tokenId === 0 || !is_numeric($vote)) {
+            return false;
+        }
+
+        return $this->post('/comments/' . $commentId . '/vote', [
+            'vote' => $vote,
+            'user_id' => $this->authUserId,
+            'token_id' => $this->tokenId,
+            'token_key' => $this->tokenKey,
+        ]);
+    }
+
+    /**
      * @return bool|string
      */
     public function notifs()
