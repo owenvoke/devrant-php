@@ -24,17 +24,30 @@ class Rant
     private $user_score;
     private $user_avatar;
 
+    /**
+     * Rant constructor.
+     * @param string $text
+     * @param array $tags
+     */
     public function __construct($text = '', $tags = [])
     {
         $this->text = $text;
         $this->tags = $tags;
     }
 
+    /**
+     * @param string $var
+     * @return mixed
+     */
     public function __get($var)
     {
         return $this->$var;
     }
 
+    /**
+     * @param $rant
+     * @return $this
+     */
     public function populateFrom($rant)
     {
         unset($rant['success']);
