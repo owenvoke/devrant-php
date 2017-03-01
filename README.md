@@ -20,44 +20,63 @@ require 'vendor/autoload.php';
 <?php
 include 'src/Connection.php';
 include 'src/Rant.php';
+
+include 'src/Modules/*.php'; // Include whichever Modules that are required
 ```
 
 Once included, you can initialise the class using either of the following:
 ```php
-$devRant = new \pxgamer\devRant\Connection;
+$module = new \pxgamer\devRant\Modules\*;
 ```
 ```php
-use \pxgamer\devRant\Connection;
-$devRant = new Connection;
+use \pxgamer\devRant\Modules;
+$module = new Modules\*;
 ```
 
 ## Class Methods
 
+#### Modules\Account
 Method Name           | Parameters | Returns
 --------------------- | ---------- | -------
-getRants($searchterm) | string (optional) | `array of Rant objects`
-getRantById($id)      | int        | `Rant object`
-getUserById($id)      | int        | `array`
-getUsersId($username) | string     | `array`
 login($username, $password) | strings     | `boolean`
 logout()              | void       | `void`
-rant($rant) | Rant object | `array`
-comment($rantId, $comment) | mixed | `array`
-voteRant($rantId, $vote) | mixed | `array`
-voteComment($commentId, $vote) | mixed | `array`
 notifs() | void | `array`
-collabs() | void | `array`
-deleteRant($rantId) | int | `array`
-deleteComment($commentId) | int | `array`
 deleteAccount() | void | `array`
+
+#### Modules\Collabs
+Method Name           | Parameters | Returns
+--------------------- | ---------- | -------
+collabs() | void | `array`
+
+#### Modules\Comments
+Method Name           | Parameters | Returns
+--------------------- | ---------- | -------
+comment($rantId, $comment) | mixed | `array`
+voteComment($commentId, $vote) | mixed | `array`
+deleteComment($commentId) | int | `array`
+
+#### Modules\Rants
+Method Name           | Parameters | Returns
+--------------------- | ---------- | -------
+rant($rant) | Rant object | `array`
+deleteRant($rantId) | int | `array`
+getRants($searchterm) | string (optional) | `array of Rant objects`
+getRantById($id)      | int        | `Rant object`
+voteRant($rantId, $vote) | mixed | `array`
+
+#### Modules\Users
+Method Name           | Parameters | Returns
+--------------------- | ---------- | -------
+getUserById($id)      | int        | `array`
+getUserId($username) | string     | `array`
 
 ## Examples
 
 ### _Getting array of rants_
 ```php
-$devRant = new \pxgamer\devRant\Connection;
-$devRant->getRants(); // Get rants
-$devRant->getRants($searchterm); // Get rants using a search query
+$rants = new \pxgamer\devRant\Modules\Rants;
+$rants->getRants(); // Get rants
+$rants->getRants($searchterm); // Get rants using a search query
 ```
 Returns false on failure, or:
 ```php
@@ -70,15 +89,15 @@ Returns false on failure, or:
 
 ### _Getting a single rant by its id_
 ```php
-$devRant = new \pxgamer\devRant\Connection;
-$devRant->getRantById(int);
+$rants = new \pxgamer\devRant\Modules\Rants;
+$rants->getRantById(int);
 ```
 Returns false on failure, or a `Rant` object.
 
 ### _Getting a user by their id_
 ```php
-$devRant = new \pxgamer\devRant\Connection;
-$devRant->getUserById(int);
+$users = new \pxgamer\devRant\Modules\Users;
+$users->getUserById(int);
 ```
 Returns:
 ```php
@@ -109,8 +128,8 @@ Returns:
 
 ### _Search rants_
 ```php
-$devRant = new \pxgamer\devRant\Connection;
-$devRant->getRants('string');
+$rants = new \pxgamer\devRant\Modules\Rants;
+$rants->getRants('string');
 ```
 Returns false on failure, or:
 ```php
@@ -147,8 +166,8 @@ Returns false on failure, or:
 
 ### _Getting a user's id from their username_
 ```php
-$devRant = new \pxgamer\devRant\Connection;
-$devRant->getUserId('username');
+$users = new \pxgamer\devRant\Modules\Users;
+$users->getUserId('username');
 ```
 Returns:
 ```php
@@ -160,8 +179,8 @@ Returns:
 
 ### _Getting signed in_
 ```php
-$devRant = new \pxgamer\devRant\Connection;
-$devRant->login('username', 'password');
+$account = new \pxgamer\devRant\Modules\Account;
+$account->login('username', 'password');
 ```
 Returns `true` if successful, `false` if not
 
@@ -169,9 +188,10 @@ Returns `true` if successful, `false` if not
 ```php
 use \pxgamer\devRant\Rant;
 
-$devRant = new \pxgamer\devRant\Connection;
-if ($devRant->login('username', 'password')) {
-    $devRant->rant(new Rant($rant_content, $tags));
+$account = new \pxgamer\devRant\Modules\Account;
+$rants = new \pxgamer\devRant\Modules\Rant;
+if ($account->login('username', 'password')) {
+    $rants->rant(new Rant($rant_content, $tags));
 }
 ```
 Returns:
@@ -184,9 +204,10 @@ Returns:
 
 ### _Posting a comment_
 ```php
-$devRant = new \pxgamer\devRant\Connection;
-if ($devRant->login('username', 'password')) {
-    $devRant->comment($rantId, 'Comment Content');
+$account = new \pxgamer\devRant\Modules\Account;
+$comments = new \pxgamer\devRant\Modules\Comments;
+if ($account->login('username', 'password')) {
+    $comments->comment($rantId, 'Comment Content');
 }
 ```
 Returns:
@@ -198,9 +219,9 @@ Returns:
 
 ### _Getting Collabs_
 ```php
-$devRant = new \pxgamer\devRant\Connection;
+$collabs = new \pxgamer\devRant\Modules\Collabs;
 
-$collabs = $devRant->collabs();
+$response = $collabs->collabs();
 ```
 Returns:
 ```php
@@ -216,9 +237,10 @@ Returns:
 
 ### _Voting on Rants_
 ```php
-$devRant = new \pxgamer\devRant\Connection;
-if ($devRant->login('username', 'password')) {
-    $voteRant = $devRant->voteRant($rantId, $vote);
+$account = new \pxgamer\devRant\Modules\Account;
+$rants = new \pxgamer\devRant\Modules\Rants;
+if ($account->login('username', 'password')) {
+    $voteRant = $rants->voteRant($rantId, $vote);
 }
 ```
 Returns:
@@ -234,9 +256,10 @@ Returns:
 
 ### _Voting on Comments_
 ```php
-$devRant = new \pxgamer\devRant\Connection;
-if ($devRant->login('username', 'password')) {
-    $voteRant = $devRant->voteComment($commentId, $vote);
+$accounts = new \pxgamer\devRant\Modules\Account;
+$comments = new \pxgamer\devRant\Modules\Comments;
+if ($accounts->login('username', 'password')) {
+    $voteComment = $comments->voteComment($commentId, $vote);
 }
 ```
 Returns:
@@ -252,9 +275,9 @@ Returns:
 
 ### _Getting your notifications_
 ```php
-$devRant = new \pxgamer\devRant\Connection;
-if ($devRant->login('username', 'password')) {
-    $notifications = $devRant->notifs();
+$account = new \pxgamer\devRant\Modules\Account;
+if ($account->login('username', 'password')) {
+    $notifications = $account->notifs();
 }
 ```
 Returns:
@@ -278,9 +301,10 @@ Returns:
 *Please note that this will __permanently__ delete the rant from devRant.*
 
 ```php
-$devRant = new \pxgamer\devRant\Connection;
-if ($devRant->login('username', 'password')) {
-    $devRant->deleteRant($rantId);
+$account = new \pxgamer\devRant\Modules\Account;
+$rants = new \pxgamer\devRant\Modules\Rants;
+if ($account->login('username', 'password')) {
+    $rants->deleteRant($rantId);
 }
 ```
 Returns:
@@ -295,9 +319,10 @@ Returns:
 *Please note that this will __permanently__ delete the comment from devRant.*
 
 ```php
-$devRant = new \pxgamer\devRant\Connection;
-if ($devRant->login('username', 'password')) {
-    $devRant->deleteComment($commentId);
+$account = new \pxgamer\devRant\Modules\Account;
+$comments = new \pxgamer\devRant\Modules\Comments;
+if ($account->login('username', 'password')) {
+    $comments->deleteComment($commentId);
 }
 ```
 Returns:
@@ -312,9 +337,9 @@ Returns:
 *Please note that this will __permanently__ delete your account from devRant.*
 
 ```php
-$devRant = new \pxgamer\devRant\Connection;
-if ($devRant->login('username', 'password')) {
-    $devRant->deleteAccount();
+$account = new \pxgamer\devRant\Modules\Account;
+if ($account->login('username', 'password')) {
+    $account->deleteAccount();
 }
 ```
 Returns:
