@@ -4,6 +4,10 @@ namespace pxgamer\devRant\Modules;
 
 use pxgamer\devRant\Connection;
 
+/**
+ * Class Users
+ * @package pxgamer\devRant\Modules
+ */
 class Users
 {
     /**
