@@ -27,8 +27,7 @@
   },
   "autoload": {
     "psr-4": {
-      "pxgamer\\devRant\\": "src/",
-      "": "vendor/"
+      "pxgamer\\devRant\\": "src/"
     }
   }
 }
