@@ -12,7 +12,7 @@ namespace pxgamer\devRant;
  */
 class Connection
 {
-    const API_BASE = 'https://www.devrant.com/api';
+    const API_BASE = 'https://devrant.com/api';
 
     /**
      * No idea what this should be, but it only worked with 3
@@ -274,6 +274,7 @@ class Connection
                 CURLOPT_SSL_VERIFYPEER => 0,
                 CURLOPT_SSL_VERIFYHOST => 0,
                 CURLOPT_RETURNTRANSFER => 1,
+                CURLOPT_FOLLOWLOCATION => 1,
             ]
         );
         $result = curl_exec($ch);
