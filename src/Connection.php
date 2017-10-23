@@ -12,7 +12,7 @@ namespace pxgamer\devRant;
  */
 class Connection
 {
-    const API_BASE = 'https://www.devrant.io/api';
+    const API_BASE = 'https://www.devrant.com/api';
 
     /**
      * No idea what this should be, but it only worked with 3
