@@ -271,8 +271,6 @@ class Connection
             $ch,
             [
                 CURLOPT_URL => $url,
-                CURLOPT_SSL_VERIFYPEER => 0,
-                CURLOPT_SSL_VERIFYHOST => 0,
                 CURLOPT_RETURNTRANSFER => 1,
                 CURLOPT_FOLLOWLOCATION => 1,
             ]
@@ -304,8 +302,6 @@ class Connection
             $ch,
             [
                 CURLOPT_URL => $url,
-                CURLOPT_SSL_VERIFYPEER => 0,
-                CURLOPT_SSL_VERIFYHOST => 0,
                 CURLOPT_RETURNTRANSFER => 1,
                 CURLOPT_POST => 1,
                 CURLOPT_POSTFIELDS => http_build_query($post_array),
@@ -332,8 +328,6 @@ class Connection
             $ch,
             [
                 CURLOPT_URL => $url,
-                CURLOPT_SSL_VERIFYPEER => 0,
-                CURLOPT_SSL_VERIFYHOST => 0,
                 CURLOPT_RETURNTRANSFER => 1,
                 CURLOPT_CUSTOMREQUEST => 'DELETE',
             ]
