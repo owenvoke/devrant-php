@@ -24,11 +24,11 @@ include 'src/Rant.php';
 
 Once included, you can initialise the class using either of the following:
 ```php
-$devRant = new \pxgamer\devRant\Connection;
+$devRant = new \pxgamer\devRant\Connection();
 ```
 ```php
 use \pxgamer\devRant\Connection;
-$devRant = new Connection;
+$devRant = new Connection();
 ```
 
 ## Class Methods
@@ -323,3 +323,7 @@ Returns:
     "success" => true
 ]
 ```
+
+## License
+
+The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
